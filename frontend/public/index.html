@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Technical Quiz (Fullstack Connected)</title>
+<style>
+/* ---------- Base (Sleeker, classier edges) ---------- */
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #f3e8ff, #fde2e4, #e0f7fa);
+  color: #444;
+  text-align: center;
+  margin: 0;
+  padding: 30px;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+h1 { font-size: 2.5em; color: #7c5fa3; margin: 0.25em 0; }
+h2 { color: #6d5b97; margin: 0.5em 0; }
+/* Sections */
+.page-section { display: none; }
+#intro-section { display: block; }
+/* Cards & Buttons */
+.card {
+  background: #ffffffcc; border-radius: 12px; padding: 30px; margin: 20px auto;
+  max-width: 700px; box-shadow: 0 8px 20px rgba(150,120,200,0.2);
+  backdrop-filter: blur(6px);
+}
+.intro-buttons { display:flex; justify-content:center; gap:15px; margin-top:20px; }
+.error-text { color:#a33; min-height:1.2em; margin-top:10px; }
+.instructions { display:flex; flex-direction:column; align-items:center; gap:15px; margin-top:20px; }
+.instruction-card {
+  background:#f8f5ff; border:1px solid #e4d8f6; border-radius:10px;
+  width:80%; max-width:550px; padding:15px 20px; box-shadow:0 4px 12px rgba(173,149,215,0.15);
+  color:#4b3e75; font-size:1.05em;
+}
+input[type="text"], input[type="number"]{
+  padding:10px; border-radius:8px; border:1px solid #b8a7f9; margin:8px;
+  width:60%; text-align:center;
+}
+/* Quiz styling */
+.quiz-section {
+  background:#ffffffcc; border-radius:12px; padding:30px; margin:30px auto; max-width:700px;
+  box-shadow:0 8px 20px rgba(150,120,200,0.2); transition:background 0.35s ease, color 0.35s ease;
+}
+.question-card {
+  background:#faf5ff; border-radius:10px; padding:25px; box-shadow:0 4px 12px rgba(173,149,215,0.15);
+  margin-bottom:20px;
+}
+.option {
+  display:block; background:#fff; color:#333; border-radius:8px; padding:10px; margin:10px auto;
+  width:80%; max-width:450px; border:1px solid #e0c9ff; cursor:pointer; transition:all 0.18s ease;
+  text-align:left;
+}
+.option:hover { background:#f1e6ff; transform:scale(1.02); }
+.option.disabled { pointer-events:none; opacity:0.9; }
+.option.correct { background:#c3f9d1!important; }
+.option.wrong { background:#ffc6c6!important; }
+button {
+  background-color:#c8b6ff; color:#fff; border:none; border-radius:10px;
+  padding:12px 25px; font-size:1em; cursor:pointer; transition:transform 0.18s, background 0.18s;
+}
+button.secondary {
+  background-color:#f0e9ff; color:#7c5fa3; border:1px solid #c8b6ff;
+}
+button.secondary:hover:enabled { background-color:#e6daff; }
+button:hover:enabled { transform:translateY(-2px); background-color:#b497ff; }
+button:disabled { background:#dcd2f8; cursor:not-allowed; }
+.result { font-size:1.3em; color:#6a4caf; font-weight:600; margin-top:16px; }
+#darkModeToggle {
+  position:fixed; top:14px; right:14px; background:#d1b3ff; border-radius:8px;
+  padding:8px 10px; border:none; cursor:pointer; font-size:1.05rem; z-index:1001;
+}
+/* Review & Records */
+#review-section, #records-list { margin-top:30px; text-align:left; }
+.review-item, .record-item {
+  background:#faf5ff; border:1px solid #e4d8f6; border-radius:8px;
+  padding:15px; margin-bottom:10px;
+}
+.review-item strong, .record-item strong { color:#6d5b97; display:block; margin-bottom:8px; }
+.record-item-score { font-size:1.2em; font-weight:bold; color:#6a4caf; }
+.record-item-date { font-size:0.9em; color:#777; margin-top:8px; }
+.review-correct-text { color:#2a753d; }
+.review-wrong-text { color:#a33; }
+.review-correct-ans { color:#2a753d; font-weight:bold; }
+/* Loading */
+#loading-indicator {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(255,255,255,0.8); backdrop-filter:blur(5px);
+  display:flex; justify-content:center; align-items:center;
+  font-size:1.5em; color:#6d5b97; z-index:1000; padding:20px; box-sizing:border-box;
+}
+/* Dark mode */
+.dark-mode { background:linear-gradient(135deg,#16161a,#23232a); color:#f1eef9; }
+.dark-mode h1{color:#d9caff;}
+.dark-mode .card,.dark-mode .quiz-section{background:#2d2d33cc;box-shadow:0 8px 20px rgba(0,0,0,0.4);}
+.dark-mode .instruction-card{background:#3b3740;color:#ddd;border:1px solid #4b4750;}
+.dark-mode .question-card{background:#333;color:#fff;box-shadow:none;}
+.dark-mode .option{background:#3f3f46;color:#f4f4f8;border:1px solid #555;}
+.dark-mode .option:hover{background:#52505a;}
+.dark-mode .option.correct{background:#1f6f3a!important;color:#fff;}
+.dark-mode .option.wrong{background:#8f2b2b!important;color:#fff;}
+.dark-mode button{background:#6f52ff;}
+.dark-mode button.secondary{background-color:#3a3a4d;color:#d9caff;border-color:#6f52ff;}
+.dark-mode button.secondary:hover:enabled{background-color:#4a4a61;}
+.dark-mode button:hover:enabled{background:#8a73ff;}
+.dark-mode .error-text{color:#ffb4b4;}
+.dark-mode #loading-indicator{background:rgba(20,20,25,0.8);color:#d9caff;}
+.dark-mode .review-item,.dark-mode .record-item{background:#333;border-color:#4b4750;}
+.dark-mode .review-item strong,.dark-mode .record-item strong{color:#d9caff;}
+.dark-mode .record-item-score{color:#c8b6ff;}
+.dark-mode .record-item-date{color:#aaa;}
+.dark-mode .review-correct-text{color:#90ee90;}
+.dark-mode .review-wrong-text{color:#ffb4b4;}
+.dark-mode .review-correct-ans{color:#90ee90;}
+</style>
+</head>
+<body>
+<button id="darkModeToggle">🌙</button>
+<div id="loading-indicator" style="display:none;">Loading...</div>
+
+<h1>Technical Quiz</h1>
+
+<!-- Intro -->
+<div id="intro-section" class="page-section">
+  <div class="card">
+    <h2>Welcome to the Quiz World ✨</h2>
+    <p>This quiz tests your understanding of <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong>.</p>
+    <input id="name" type="text" placeholder="Enter your Name" />
+    <br />
+    <input id="prn" type="number" placeholder="Enter your PRN" />
+    <p id="intro-error" class="error-text"></p>
+    <button id="startBtn">Start Quiz</button>
+  </div>
+  <div class="intro-buttons">
+    <button id="showInstructionsBtn" class="secondary">Instructions</button>
+    <button id="showRecordsBtn" class="secondary">View Records</button>
+  </div>
+</div>
+
+<!-- Instructions -->
+<div id="instructions-section" class="page-section quiz-section">
+  <h2>Instructions</h2>
+  <div class="instructions">
+    <div class="instruction-card">🌼 Each question has one correct answer.</div>
+    <div class="instruction-card">🌸 Take your time — Next is enabled after 3s.</div>
+    <div class="instruction-card">🌼 Options highlight green/red when chosen.</div>
+    <div class="instruction-card">🌸 Your name will be shown with your score at the end.</div>
+    <div class="instruction-card">✅ Your results will be saved automatically.</div>
+  </div>
+  <br>
+  <button id="backFromInstructionsBtn">Back</button>
+</div>
+
+<!-- Records -->
+<div id="records-section" class="page-section quiz-section">
+  <h2>Your Past Results</h2>
+  <div id="records-list"><p>No records found.</p></div>
+  <br><button id="backFromRecordsBtn">Back</button>
+</div>
+
+<!-- Quiz -->
+<div id="quiz-page-section" class="page-section quiz-section">
+  <div id="quiz"></div>
+  <p id="timerDisplay"></p>
+  <button id="nextBtn" disabled>Next ➜</button>
+</div>
+
+<!-- Result -->
+<div id="result-section" class="page-section quiz-section">
+  <h2 id="resultMessage"></h2>
+  <div class="result" id="score"></div><br>
+  <button id="restartBtn">Back to Home 🏠</button>
+  <div id="review-section"></div>
+</div>
+
+<script type="module">
+/* ---------- Questions ---------- */
+const quizData = [
+  { q:"1️. What does HTML stand for?", opts:["HyperText Markup Language","HighText Machine Language","Hyper Transfer Markup Language","Home Tool Markup Language"], ans:"HyperText Markup Language" },
+  { q:"2. Which CSS property changes text color?", opts:["font-color","color","text-color","font-style"], ans:"color" },
+  { q:"3. What does DOM stand for?", opts:["Document Object Model","Data Object Management","Digital Ordinance Model","Document Order Mechanism"], ans:"Document Object Model" },
+  { 
+  q: "4️. Which tag links an external CSS file?", 
+  opts: ["&lt;css&gt;", "&lt;link&gt;", "&lt;style&gt;", "&lt;script&gt;"], 
+  ans: "&lt;link&gt;" 
+},
+  { q:"5. JS method to write to HTML document?", opts:["document.write()","console.log()","window.print()","innerHTML()"], ans:"document.write()" }
+];
+
+let current=0,score=0,userName="",userPRN="",enableNextTimer=null,userAnswers=[];
+const allSections=document.querySelectorAll('.page-section');
+const quizDiv=document.getElementById('quiz');
+const timerDisplay=document.getElementById('timerDisplay');
+const nextBtn=document.getElementById('nextBtn');
+const nameInput=document.getElementById('name');
+const prnInput=document.getElementById('prn');
+const introError=document.getElementById('intro-error');
+const reviewSection=document.getElementById('review-section');
+const recordsList=document.getElementById('records-list');
+const API_URL="http://localhost:5002/api/records";
+
+/* ---------- Page Control ---------- */
+function showPage(id){allSections.forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';}
+function escapeHTML(s){ 
+  return s.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+function decodeHTML(html){
+  const t=document.createElement("textarea");
+  t.innerHTML=html;
+  return t.value;
+}
+
+/* ---------- Backend Integration ---------- */
+async function saveResult(resultData){
+  console.log("Saving to backend...");
+  try{
+    const res=await fetch(API_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(resultData)
+    });
+    if(res.ok)console.log("✅ Saved to backend");
+    else console.warn("⚠️ Backend save failed");
+  }catch(e){console.error("Error saving:",e);}
+}
+
+async function loadRecords(){
+  console.log("Loading records...");
+  try{
+    const res=await fetch(API_URL);
+    if(!res.ok)throw new Error("Network error");
+    const records=await res.json();
+    if(records.length===0){recordsList.innerHTML="<p>No records found.</p>";return;}
+    records.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+    recordsList.innerHTML="";
+    records.forEach(r=>{
+      const d=new Date(r.createdAt).toLocaleString();
+      const div=document.createElement("div");
+      div.className="record-item";
+      div.innerHTML=`<strong>Name: ${escapeHTML(r.name||"N/A")} (PRN: ${escapeHTML(r.prn||"-")})</strong>
+      <div class="record-item-score">Score: ${r.score}/${r.total}</div>
+      <div class="record-item-date">${d}</div>`;
+      recordsList.appendChild(div);
+    });
+  }catch(e){
+    console.error("Error:",e);
+    recordsList.innerHTML="<p>Error loading records.</p>";
+  }
+}
+
+/* ---------- Quiz Flow ---------- */
+function loadQuestion(){
+  clearTimeout(enableNextTimer);
+  const item=quizData[current];
+  quizDiv.innerHTML=`<div class="question-card"><h3>${item.q}</h3>`+
+    item.opts.map(o=>`<div class="option">${o}</div>`).join("")+`</div>`;
+  document.querySelectorAll('.option').forEach(o=>o.addEventListener('click',()=>handleOption(o)));
+  nextBtn.disabled=true;
+  timerDisplay.textContent='⏳ Please wait 3 seconds before Next...';
+  enableNextTimer=setTimeout(()=>{timerDisplay.textContent='✅ You can now click Next.';nextBtn.disabled=false;},3000);
+}
+function handleOption(el){
+  document.querySelectorAll('.option').forEach(o=>{o.classList.add('disabled');o.style.pointerEvents='none';});
+  const chosen=el.innerText.trim();
+  const correct=decodeHTML(quizData[current].ans);
+  const isCorrect=chosen===correct;
+  if(isCorrect){score++;el.classList.add('correct');}
+  else{
+    el.classList.add('wrong');
+    document.querySelectorAll('.option').forEach(o=>{if(o.innerText.trim()===correct)o.classList.add('correct');});
+  }
+  userAnswers.push({q:quizData[current].q,chosen,correct,isCorrect});
+}
+nextBtn.addEventListener('click',()=>{
+  clearTimeout(enableNextTimer);
+  current++;
+  if(current<quizData.length)loadQuestion();
+  else showResult();
+});
+function showResult(){
+  showPage('result-section');
+  document.getElementById('resultMessage').innerText=`🎉 Well done, ${userName}!`;
+  document.getElementById('score').innerText=`You scored ${score} / ${quizData.length}`;
+  buildReview();
+  const resultData={name:userName,prn:userPRN,score:score,total:quizData.length,answers:userAnswers};
+  saveResult(resultData);
+}
+function buildReview(){
+  reviewSection.innerHTML='<h2>Review Your Answers</h2>'+
+  userAnswers.map((it,i)=>{
+    return `<div class="review-item"><strong>Question ${i+1}: ${decodeHTML(it.q)}</strong>`+
+    (it.isCorrect?`<div class="review-correct-text">Your answer: ${escapeHTML(it.chosen)} (Correct)</div>`:
+    `<div class="review-wrong-text">Your answer: ${escapeHTML(it.chosen)} (Wrong)</div><div class="review-correct-ans">Correct answer: ${escapeHTML(it.correct)}</div>`)
+    +`</div>`;
+  }).join('');
+}
+
+/* ---------- UI Buttons ---------- */
+document.getElementById('startBtn').onclick=()=>{
+  const nm=nameInput.value.trim(),prn=prnInput.value.trim();
+  introError.textContent="";
+  if(!nm||!prn){introError.textContent="Please enter both Name and PRN!";return;}
+  userName=nm;userPRN=prn;current=0;score=0;userAnswers=[];
+  showPage('quiz-page-section');loadQuestion();
+};
+document.getElementById('showInstructionsBtn').onclick=()=>showPage('instructions-section');
+document.getElementById('showRecordsBtn').onclick=()=>{loadRecords();showPage('records-section');};
+document.getElementById('backFromInstructionsBtn').onclick=()=>showPage('intro-section');
+document.getElementById('backFromRecordsBtn').onclick=()=>showPage('intro-section');
+document.getElementById('restartBtn').onclick=()=>{showPage('intro-section');prnInput.value='';};
+
+/* ---------- Dark Mode ---------- */
+const darkToggle=document.getElementById('darkModeToggle');
+function setDarkMode(on){document.body.classList.toggle('dark-mode',on);darkToggle.textContent=on?'☀️':'🌙';localStorage.setItem('quiz_dark',on?'1':'0');}
+darkToggle.onclick=()=>setDarkMode(!document.body.classList.contains('dark-mode'));
+if(localStorage.getItem('quiz_dark')==='1')setDarkMode(true);
+</script>
+</body>
+</html>

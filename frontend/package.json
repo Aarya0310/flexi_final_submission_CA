@@ -1,0 +1,9 @@
+{
+  "name": "fullstack-auth-app-frontend-static",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npx serve public -l 3000"
+  },
+  "dependencies": {}
+}
