@@ -8,11 +8,16 @@ It features a smooth UI, dark mode 🌙, question review section, and record tra
 
 ## ✨ Features
 
-✅ **Interactive Quiz Interface** – Modern and responsive design built with HTML, CSS, and JavaScript.
-✅ **Dark/Light Mode** toggle 🌗 for better user experience.
-✅ **Automatic Result Saving** – Stores user name, PRN, and score in MongoDB.
-✅ **Past Records Section** – Fetches and displays previous quiz attempts.
-✅ **Question Review** – See your correct and incorrect answers after completion.
+✅ **Interactive Quiz Interface** – Modern and responsive design built with HTML, CSS, and JavaScript.  
+
+✅ **Dark/Light Mode** toggle 🌗 for better user experience.  
+
+✅ **Automatic Result Saving** – Stores user name, PRN, and score in MongoDB.  
+
+✅ **Past Records Section** – Fetches and displays previous quiz attempts.  
+
+✅ **Question Review** – See your correct and incorrect answers after completion.  
+
 ✅ **Smooth Animations** and intuitive UX.
 
 ---
@@ -128,11 +133,10 @@ technical-quiz-app/
 
 | Light Mode | Dark Mode |
 | ---------- | --------- |
-| 🌞<img width="1908" height="919" alt="Screenshot 2025-11-09 221942" src="https://github.com/user-attachments/assets/b7acaca5-60b3-4de1-b3da-2fa630032fbf" />
-    | 🌙 <img width="1899" height="907" alt="image" src="https://github.com/user-attachments/assets/52f10bee-1111-4db2-bfa8-56a3b300d2f5" />
-       |
+| 🌞 <img width="1908" height="919" alt="Screenshot 2025-11-09 221942" src="https://github.com/user-attachments/assets/b7acaca5-60b3-4de1-b3da-2fa630032fbf" />
+    | 🌙 <img width="1899" height="907" alt="Screenshot 2025-11-09 221953" src="https://github.com/user-attachments/assets/23c0bab9-c9b9-45c7-b99c-74a67f007e4a" />
 
-(Add your screenshots here once available)
+       |
 
 ---
 
@@ -140,6 +144,3 @@ technical-quiz-app/
 
 Pull requests are welcome!
 If you'd like to improve or add features, please fork this repo and create a PR.
-
-
-Would you like me to include a **GIF demo** or **screenshot preview layout** section for GitHub (e.g., “How it looks” grid)? I can format it beautifully for your final submission or portfolio.
