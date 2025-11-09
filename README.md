@@ -133,8 +133,9 @@ technical-quiz-app/
 
 | Light Mode | Dark Mode |
 | ---------- | --------- |
-| 🌞 <img width="1908" height="919" alt="Screenshot 2025-11-09 221942" src="https://github.com/user-attachments/assets/b7acaca5-60b3-4de1-b3da-2fa630032fbf" />
-    | 🌙 <img width="1899" height="907" alt="Screenshot 2025-11-09 221953" src="https://github.com/user-attachments/assets/23c0bab9-c9b9-45c7-b99c-74a67f007e4a" />
+| 🌞 <img width="1908" height="919" alt="Screenshot 2025-11-09 221942" src="https://github.com/user-attachments/assets/b7acaca5-60b3-4de1-b3da-2fa630032fbf" width = 500 />
+    | 🌙<img src="https://github.com/user-attachments/assets/23c0bab9-c9b9-45c7-b99c-74a67f007e4a" alt="Dark Mode Screenshot" width="800" />
+
 
        |
 
