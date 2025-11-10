@@ -1,5 +1,5 @@
 
-# 🧠 Technical Quiz App
+# Technical Quiz App
 
 A **full-stack web application** that allows users to take a technical quiz on **HTML, CSS, and JavaScript**, view their results, and store scores securely in a **MongoDB database**.
 It features a smooth UI, dark mode 🌙, question review section, and record tracking.
