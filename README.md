@@ -21,11 +21,6 @@ It features a smooth UI, dark mode 🌙, question review section, and record tra
 ✅ **Smooth Animations** and intuitive UX.
 
 ---
-## 🎨 VERCEL
-
-Vercel link: https://fullstack-auth-app-jmzc.vercel.app/
-
----
 
 ## 🧩 Tech Stack
 
